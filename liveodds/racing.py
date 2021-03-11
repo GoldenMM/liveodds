@@ -1,6 +1,6 @@
 from .utils.utils import *
 
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 from json import dumps
 
 
@@ -67,6 +67,23 @@ class Meeting:
             url = race.attrib['href']
             self._races[time] = Race(self.course, self.date, self.region, time, title, url, self.session)
 
+    def json(self):
+        json = {}
+        for race in self.races():
+            json[race.time] = race.odds()
+
+        return dumps(json)
+
+    def parse_docs(self, docs):
+        for doc in docs:
+            _url = tag_with_attrib(doc, '//meta', 'property="og:url"')
+            key = _url.attrib['content'].split('/')[5]
+            try:
+                self._races[key].parse_odds(doc.find('.//tbody'))
+            except KeyError:
+                off_time = tag_with_classes(doc, '//a', ['race-time', 'active'])
+                self._races[off_time.text].parse_odds(doc.find('.//tbody'))
+
     def race(self, key):
         doc = document(self._races[key].url, self.session)
         self._races[key].parse_odds(doc.find('.//tbody'))
@@ -88,16 +105,6 @@ class Meeting:
         self.parse_docs(docs)
 
         return self._races
-
-    def parse_docs(self, docs):
-        for doc in docs:
-            _url = tag_with_attrib(doc, '//meta', 'property="og:url"')
-            key = _url.attrib['content'].split('/')[5]
-            try:
-                self._races[key].parse_odds(doc.find('.//tbody'))
-            except KeyError:
-                off_time = tag_with_classes(doc, '//a', ['race-time', 'active'])
-                self._races[off_time.text].parse_odds(doc.find('.//tbody'))
 
     def times(self):
         return list(sorted(self._races.keys()))

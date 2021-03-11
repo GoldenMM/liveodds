@@ -21,7 +21,6 @@ _racing_bookies = {
     "OE": "10Bet",
     "SA": "Sport Nation",
     "VT": "Vbet",
-    "GN": "GentingBet",
     "RZ": "RedZone",
     "RK": "Smarkets Sportsbook"
 }
