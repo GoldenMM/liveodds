@@ -74,6 +74,13 @@ class Meeting:
 
         return dumps(json)
 
+    def odds(self):
+        odds = {}
+        for race in self.races():
+            odds[race.time] = race.odds()
+
+        return odds
+
     def parse_docs(self, docs):
         for doc in docs:
             _url = tag_with_attrib(doc, '//meta', 'property="og:url"')
