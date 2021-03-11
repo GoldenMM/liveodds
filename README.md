@@ -65,10 +65,10 @@ from liveodds.racing import Racing
 <br>
 
 ## Racing
-The 2 important classes to know are **Meeting** and **Race**. The main Racing class provides a few methods to assist in accessing Meeting objects, which contain Race objects for each race at the meeting.
+There are only 3 classes, **Racing**, **Meeting** and **Race**. The Racing class provides a few methods to assist in accessing Meeting objects, which contain Race objects for each race at the meeting.
 
 <details>
-<summary>More info</summary>
+<summary>Racing class details</summary>
 
 #### Racing Class: Methods and Properties
 
@@ -98,8 +98,9 @@ _Returns a specific meeting object_
 #### Racing.meetings(date: str, region: str)
 _Returns a list of meeting objects for a given date and region._
 
+<br>
 <details>
-<summary>More info</summary>
+<summary>Meeting Class details</summary>
 
 #### Meeting class: Methods and Properties
 
@@ -113,7 +114,7 @@ _Returns a list of meeting objects for a given date and region._
 
 | Properties       | Description                               |
 |------------------|-------------------------------------------|
-| date: str        | Date of the race                          |
+| date: str        | Date of the meeting                       |
 | region: str      | 2 or 3 letter region code (ALL CAPS)      |
 | course: str      | Name of the course                        |
 
@@ -132,8 +133,9 @@ _Returns a specific race object given a start time ie '14:30'_
 #### Meeting.races()
 Returns a list of race objects for all races in the meeting.
 
+<br>
 <details>
-<summary>More info</summary>
+<summary>Race class details</summary>
 
 #### Race class: Methods and Properties
 
@@ -148,7 +150,7 @@ Returns a list of race objects for all races in the meeting.
 | Properties      | Description                                             |
 |-----------------|---------------------------------------------------------|
 | course :str     | The name of the course                                  |
-| date: str       | Date of the meeting                                     |
+| date: str       | Date of the race                                        |
 | region: str     | 2 or 3 letter region code (ALL CAPS)                    |
 | time :str       | The off time of the race                                |
 | title: str      | The name of the race (Very inconsistent outside UK/IRE) |
