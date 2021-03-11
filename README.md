@@ -7,7 +7,7 @@
   <img src="https://i.postimg.cc/0Q4twkVp/comments-0-yellowgreen.png">
 </p>
 
-# liveodds
+## liveodds
 
 Unofficial (and highly illegal) Python  API for Oddschecker
 
