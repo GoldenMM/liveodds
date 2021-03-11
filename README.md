@@ -8,7 +8,7 @@
 </p>
 
 
-Unofficial(and highly illegal) Python  API for Oddschecker
+Unofficial (and highly illegal) Python  API for Oddschecker
 
 
 Plan to cover a few of the main sports but Racing and Football are only guarantees so far. Golf, Tennis, Greyhounds, Basketball, NFL etc could possibly follow if I don't get bored and if there is sufficient interest. Requests in discussions will be considered, briefly at least, and indeed at most.
@@ -23,17 +23,17 @@ Plan to cover a few of the main sports but Racing and Football are only guarante
     - [Racing](#racing)
         - [Meeting](#meeting)
         - [Race](#race)
-        - [Examples](#examples)
+        - [Examples](#examples-1)
     - [Football](#racing)
         - [Competition](#competition)
         - [Match](#match)
-        - [Examples](#examples)
-- [Legal](#legal)
+        - [Examples](#examples-2)
+- [Disclaimer](#disclaimer)
 
 <br>
 
 ## Requirements
-Of course we need Python 3.6 or greater, you can get the latest version [here](https://www.python.org/downloads/). In addition, the modules [lxml](https://lxml.de/), [requests](https://requests.readthedocs.io/en/master/), [aiohttp](https://docs.aiohttp.org/en/stable/) are needed. They can be installed using PIP(included with Python) with the following command.
+Python 3.6 or greater is needed, you can get the latest version [here](https://www.python.org/downloads/). In addition, the modules [lxml](https://lxml.de/), [requests](https://requests.readthedocs.io/en/master/), [aiohttp](https://docs.aiohttp.org/en/stable/) are needed. They can be installed using PIP(included with Python) with the following command.
 
 ` pip3 install lxml requests aiohttp`
 
@@ -41,12 +41,17 @@ Of course we need Python 3.6 or greater, you can get the latest version [here](h
 
 ## Install
 
+Clone the repo with [git](https://git-scm.com/downloads)
+
 `git clone https://github.com/4A47/liveodds.git`
+
+or [download](https://github.com/4A47/liveodds/archive/main.zip) the zip.
+
 
 <br>
 
 ## Usage
-Documentation is possible in future, in the meantime, most of the existing functionality will be shown in example files and here.
+Documentation is possible in the future, in the meantime, most of the existing functionality will be shown in example files and here.
 
 To use the API, copy the **inner** liveodds folder to your project. 
 
@@ -207,6 +212,6 @@ race_json = meeting.race(meeting.times()[0]).json()
 <br>
 
 
-#### Legal
-I hereby denounce all liability when the MI6 cybercrime net inevitably closes in on users of this API. If you do, in a moment of misguided recklessness, decide to use this API, you *will* go to jail, no ifs, buts or maybes, the cost of doing business here is hard time. So before you clone, ask yourself just how much you really want access to the latest odds in a python script, and is it worth throwing your life away for it? Would you torrent a car?
+#### Disclaimer
+I hereby renounce all liability when the MI6 cybercrime net inevitably closes in on users of this API. If you do, in a moment of misguided recklessness, decide to use this API, you *will* go to jail, no ifs, buts or maybes, the cost of doing business here is hard time. So before you clone, ask yourself just how much you really want access to the latest odds in a python script, and is it worth throwing your life away for it? Would you torrent a car?
 
