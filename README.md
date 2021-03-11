@@ -1,6 +1,10 @@
 ![liveodds](https://i.postimg.cc/fb9KZ044/liveodds-tp.png)
 
 <p align="center">
+  <img src="https://i.postimg.cc/g2z1WmkG/liveodds-tp.png">
+</p>
+
+<p align="center">
   <img src="https://i.postimg.cc/6pC44nV9/build-joints-brightgreen.png">
   <img src="https://i.postimg.cc/DmkBxCk0/joint-passing-brightgreen.png">
   <img src="https://i.postimg.cc/3NDtjsqz/checks-bouncing-brightgreen.png">
