@@ -86,7 +86,7 @@ The 2 important classes to know are **Meeting** and **Race**. The main Racing cl
 
 <br>
 
-#### Meeting
+### Meeting
 
 **Meeting objects** are stored in a nested dictionary in the Racing class and can be accessed directly with the underlying Racing._meetings member, and for non lunatics, indirectly, using the convenience methods provided.
 
