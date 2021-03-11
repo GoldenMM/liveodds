@@ -7,6 +7,7 @@
   <img src="https://i.postimg.cc/0Q4twkVp/comments-0-yellowgreen.png">
 </p>
 
+# liveodds
 
 Unofficial (and highly illegal) Python  API for Oddschecker
 
@@ -65,7 +66,7 @@ from liveodds.racing import Racing
 <br>
 
 ## Racing
-There are only 3 classes, **Racing**, **Meeting** and **Race**. The Racing class provides a few methods to assist in accessing Meeting objects, which contain Race objects for each race at the meeting.
+There are 3 classes, **Racing**, **Meeting** and **Race**. The Racing class provides a few methods to assist in accessing Meeting objects which contain Race objects for each race at the meeting. Odds can be retrieved for the full meeting in the Meeting class or from individual races in the Race class.
 
 <details>
 <summary>Racing class details</summary>
@@ -88,7 +89,7 @@ There are only 3 classes, **Racing**, **Meeting** and **Race**. The Racing class
 
 ### Meeting
 
-**Meeting objects** are stored in a nested dictionary in the Racing class and can be accessed directly with the underlying Racing._meetings member, and for non lunatics, indirectly, using the convenience methods provided in the main Racing class.
+**Meeting objects** contain information about a meeting and Race objects for each race at the meeting. They can be used to access the odds for every race at the meeting. They are stored in a nested dictionary in the Racing class and can be accessed using the convenience methods provided.
 
 
 #### Racing.meeting(date: str, region: str, course: str)
@@ -106,10 +107,12 @@ _Returns a list of meeting objects for a given date and region._
 
 | Methods          | Description                                                      |
 |------------------|------------------------------------------------------------------|
+| json()           | Returns a JSON string of odds for all races at meeting           |
+| odds()           | Returns a dict of odds for all races at meeting                  |
 | race(time: str)  | Returns a specific Race object from meeting for a given off time |
-| races()          | Returns a list of all races in meeting                           |
-| races_dict()     | Returns a dict of all races in meeting                           |
-| times()          | Returns a list of string off times for all races in meeting      |
+| races()          | Returns a list of Race objects for all races at meeting          |
+| races_dict()     | Returns a dict of Race objects for all races at meeting          |
+| times()          | Returns a list of string off times for all races at meeting      |
 
 
 | Properties       | Description                               |
@@ -123,8 +126,7 @@ _Returns a list of meeting objects for a given date and region._
 
 ### Race
 
-**Race objects** contain the odds and are retrieved using the 
-following methods in the Meeting class. 
+**Race objects** contain information and odds for a race, they are retrieved using the following methods in the Meeting class. 
 
 #### Meeting.race(time: str)
 _Returns a specific race object given a start time ie '14:30'_
@@ -141,9 +143,9 @@ Returns a list of race objects for all races in the meeting.
 
 | Methods                 | Description                                                                       |
 |-------------------------|-----------------------------------------------------------------------------------|
+| json()                  | Returns JSON string of odds for every horses in race                              |
 | horses()                | Returns a list of string: horses in the race                                      |
 | odds(horse: str = None) | Returns odds dictionary for specific horse if given, otherwise all horses in race |
-| json()                  | Returns JSON string of odds for every horses in race                              |
 | update_odds()           | Updates the odds of the race                                                      |
 
 
@@ -161,7 +163,7 @@ Returns a list of race objects for all races in the meeting.
 
 ### Examples
 
-Get race objects for all todays races in the UK
+Get meeting objects for today's racing in the UK and get a dictionary of odds for each meeting
 
 ```python
 from liveodds.racing import Racing
@@ -171,30 +173,74 @@ racing = Racing()
 today = racing.dates()[0]
 
 for meeting in racing.meetings(today, 'UK'):
-    for race in meeting.races():
-        print(race.course, race.time, race.title)
+    odds = meeting.odds()
+    print(meeting.course, odds)
+```
+
+<br>
+
+The json method works in exactly the same way as odds but returns a JSON string as opposed to a dictionary.
+
+```python
+from liveodds.racing import Racing
+
+racing = Racing()
+
+today = racing.dates()[0]
+region = racing.regions(today)[0]
+course = racing.courses(today, region)[0]
+
+meeting = racing.meeting(today, region, course)
+
+print(meeting, meeting.json())
+```
+
+The JSON viewer shows the structure clearly
+
+![json](https://i.postimg.cc/26WPXgqN/meeting-json.png)
+
+
+<br>
+
+Get a list of race objects from a meeting and print some information about them
+
+```python
+from liveodds.racing import Racing
+
+racing = Racing()
+
+today = racing.dates()[0]
+course = racing.courses(today, 'UK')[0]
+meeting = racing.meeting(today, 'UK', course)
+
+for race in meeting.races():
+    print(race.course, race.time, race.odds())
 ```
 <br>
 
-Race objects contain a dictionary where the key is the name of the horse, and the value is a dictionary of bookies odds
+The Race.odds() method returns a dictionary where the key is the name of the horse, and the value is a dictionary of bookies odds
 
 ```python
+from liveodds.racing import Racing
+
+racing = Racing()
+
+today = racing.dates()[0]
 courses = racing.courses(today, 'UK')
-
 meeting = racing.meeting(today, 'UK', courses[0])
+race = meeting.race(meeting.times()[0])
 
-race_odds = meeting.race(meeting.times()[0]).odds()
+race_odds = race.odds()
 
-for horse in race_odds:
-    print(horse, race_odds[horse]['William Hill'])
+horse = race.horses()[0]
+
+for bookie in race.bookies():
+    print(f'{horse} - {bookie}: {race_odds[horse][bookie]}')
+
 ```
 <br>
 
-You can return a JSON string instead of a dictionary with the Race.json() method, and a view of the json should make the structure clear.
-
-```python
-race_json = meeting.race(meeting.times()[0]).json()
-```
+You can return a JSON string instead of a dictionary with the Race.json() method. A view of the json should make the structure clear.
 
 ![json](https://i.postimg.cc/CMR4LSMw/json.png)
 
