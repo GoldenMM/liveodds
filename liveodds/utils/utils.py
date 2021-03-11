@@ -26,8 +26,6 @@ _racing_bookies = {
     "RK": "Smarkets Sportsbook"
 }
 
-user_agent = {'User-Agent': 'Mozilla/5.0'}
-
 
 def get_date(day):
     today = datetime.today()
@@ -44,8 +42,8 @@ def racing_bookies():
     return _racing_bookies
 
 
-def document(url):
-    r = requests.get(url, headers=user_agent)
+def document(url, session):
+    r = session.get(url)
     return html.fromstring(r.content)
 
 
@@ -72,12 +70,13 @@ def tags_with_class(element, tag, target):
 
 async def documents_async(urls):
     session = aiohttp.ClientSession(connector=aiohttp.TCPConnector())
+    session.headers.update({'User-Agent': 'Mozilla/5.0'})
     ret = await asyncio.gather(*[get_document(url, session) for url in urls])
     await session.close()
     return ret
 
 
 async def get_document(url, session):
-    async with session.get(url, headers=user_agent) as response:
+    async with session.get(url) as response:
         resp = await response.text()
         return html.fromstring(resp)

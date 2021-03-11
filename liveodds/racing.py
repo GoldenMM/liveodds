@@ -1,6 +1,6 @@
-from collections import defaultdict
 from .utils.utils import *
 
+from collections import defaultdict, namedtuple
 from json import dumps
 
 
@@ -8,10 +8,12 @@ class Racing:
 
     def __init__(self):
         self._meetings = defaultdict(lambda: defaultdict(dict))
-        self.get_meetings()
+        self.session = requests.Session()
+        self.session.headers.update({'User-Agent': 'Mozilla/5.0'})
+        self._get_meetings()
 
-    def get_meetings(self):
-        doc = document('https://www.oddschecker.com/horse-racing')
+    def _get_meetings(self):
+        doc = document('https://www.oddschecker.com/horse-racing', self.session)
 
         for section in tags_with_attrib(doc, '//div', 'data-day'):
             date = get_date(section.attrib['data-day'])
@@ -20,7 +22,8 @@ class Racing:
                 course = meeting.find('.//a').text
                 region = meeting.find('.//span/span').text
                 races = tag_with_class(meeting, '//div', 'all-todays-races')
-                self._meetings[date][region][course] = Meeting(date, course, region, races.findall('.//a'))
+                race_links = races.findall('.//a')
+                self._meetings[date][region][course] = Meeting(date, course, region, race_links, self.session)
 
     def courses(self, date, region):
         return [course for course in self._meetings[date][region]]
@@ -43,11 +46,12 @@ class Racing:
 
 class Meeting:
 
-    def __init__(self, date, course, region, race_links):
+    def __init__(self, date, course, region, race_links, session):
         self.course = course
         self.date = date
         self.region = region
         self._races = {}
+        self.session = session
         self.init_races(race_links)
 
     def __repr__(self):
@@ -61,10 +65,10 @@ class Meeting:
             time = race.text_content()
             title = race.attrib['title']
             url = race.attrib['href']
-            self._races[time] = Race(self.course, self.date, self.region, time, title, url)
+            self._races[time] = Race(self.course, self.date, self.region, time, title, url, self.session)
 
     def race(self, key):
-        doc = document(self._races[key].url)
+        doc = document(self._races[key].url, self.session)
         self._races[key].parse_odds(doc.find('.//tbody'))
 
         return self._races[key]
@@ -101,7 +105,7 @@ class Meeting:
 
 class Race:
 
-    def __init__(self, course, date, region, time, title, url):
+    def __init__(self, course, date, region, time, title, url, session):
         self._bookies = racing_bookies()
         self._odds = {}
         self.course = course
@@ -111,7 +115,7 @@ class Race:
         self.time = time
         self.title = title
         self.url = 'https://www.oddschecker.com' + url
-        self.session = requests.session()
+        self.session = session
 
     def __dir__(self):
         return self.__dict__.keys()
@@ -147,5 +151,5 @@ class Race:
             self._odds[horse] = odds
 
     def update_odds(self):
-        doc = document(self.url)
+        doc = document(self.url, self.session)
         self.parse_odds(doc.find('.//tbody'))
