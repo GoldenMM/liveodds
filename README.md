@@ -70,7 +70,7 @@ The 2 important classes to know are **Meeting** and **Race**. The main Racing cl
 <details>
 <summary>More info</summary>
 
-#### Public methods and properties
+#### Racing Class: Methods and Properties
 
 | Methods                                      | Description                                                                          |
 |----------------------------------------------|--------------------------------------------------------------------------------------|
@@ -101,7 +101,7 @@ _Returns a list of meeting objects for a given date and region._
 <details>
 <summary>More info</summary>
 
-#### Public methods and properties
+#### Meeting class: Methods and Properties
 
 | Methods          | Description                                                          |
 |------------------|----------------------------------------------------------------------|
@@ -134,7 +134,7 @@ Returns a list of race objects for all races in the meeting.
 <details>
 <summary>More info</summary>
 
-#### Public methods and properties
+#### Race class: Methods and Properties
 
 | Methods                 | Description                                                                       |
 |-------------------------|-----------------------------------------------------------------------------------|
