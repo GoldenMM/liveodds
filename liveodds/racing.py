@@ -138,7 +138,7 @@ class Race:
         return f'Race({self.course} {self.time}, {self.date})'
 
     def bookies(self):
-        return self._bookies
+        return [bookie for bookie in self._bookies.values()]
 
     def horses(self):
         return [horse for horse in self._odds.keys()]
