@@ -88,7 +88,7 @@ The 2 important classes to know are **Meeting** and **Race**. The main Racing cl
 
 ### Meeting
 
-**Meeting objects** are stored in a nested dictionary in the Racing class and can be accessed directly with the underlying Racing._meetings member, and for non lunatics, indirectly, using the convenience methods provided.
+**Meeting objects** are stored in a nested dictionary in the Racing class and can be accessed directly with the underlying Racing._meetings member, and for non lunatics, indirectly, using the convenience methods provided in the main Racing class.
 
 
 #### Racing.meeting(date: str, region: str, course: str)
@@ -103,11 +103,12 @@ _Returns a list of meeting objects for a given date and region._
 
 #### Meeting class: Methods and Properties
 
-| Methods          | Description                                                          |
-|------------------|----------------------------------------------------------------------|
-| race(time: str)  | Returns a specific Race object from the meeting for a given off time |
-| races()          | Returns a dictionary of all races from the meeting                   |
-| times()          | Returns a list of string off times for all races at meeting          |
+| Methods          | Description                                                      |
+|------------------|------------------------------------------------------------------|
+| race(time: str)  | Returns a specific Race object from meeting for a given off time |
+| races()          | Returns a list of all races in meeting                           |
+| races_dict()     | Returns a dict of all races in meeting                           |
+| times()          | Returns a list of string off times for all races in meeting      |
 
 
 | Properties       | Description                               |
