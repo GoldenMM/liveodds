@@ -1,5 +1,3 @@
-![liveodds](https://i.postimg.cc/fb9KZ044/liveodds-tp.png)
-
 <p align="center">
   <img src="https://i.postimg.cc/g2z1WmkG/liveodds-tp.png">
 </p>
